@@ -1,17 +1,23 @@
 import { Button, Center, Input, Paper, Title } from "@mantine/core";
 import { IconUser, IconLock } from "@tabler/icons-react";
 import { ChangeEvent, useState } from "react";
-import { encode } from "js-base64";
 import { useUserSetter } from "../../contexts";
+import { Api } from "../../api";
+import { useNavigate } from "react-router-dom";
+import { PATHS } from "../../routers";
 
 export const Login = () => {
   const userSetter = useUserSetter();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
   const changeValue =
     (field: "login" | "password") =>
     ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+      setError(false);
       switch (field) {
         case "login":
           setLogin(value);
@@ -24,7 +30,14 @@ export const Login = () => {
 
   const setUser = () => {
     if (!userSetter) return;
-    userSetter(encode(`${login}:${password}`));
+    setLoading(true);
+    Api.setTokenAndUser(login, password)
+      .then(({ data }) => {
+        userSetter(data);
+        navigate(PATHS.MAIN);
+      })
+      .catch(() => setError(true))
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -41,6 +54,7 @@ export const Login = () => {
           variant="default"
           value={login}
           onChange={changeValue("login")}
+          error={error}
         />
         <Input
           placeholder="Введите пароль"
@@ -50,8 +64,15 @@ export const Login = () => {
           variant="default"
           value={password}
           onChange={changeValue("password")}
+          error={error}
         />
-        <Button variant="light" mt="xl" fullWidth onClick={setUser}>
+        <Button
+          variant="light"
+          mt="xl"
+          fullWidth
+          onClick={setUser}
+          loading={loading}
+        >
           Войти
         </Button>
       </Paper>
