@@ -25,6 +25,15 @@ export type Organization = {
   branches: Branch[];
 };
 
+export type CreateOrganization = {
+  name: string;
+  inn: string;
+  director: Pick<
+    User,
+    "surname" | "firstName" | "lastName" | "passport" | "password"
+  >;
+};
+
 export type User = {
   id: string;
   username: string;

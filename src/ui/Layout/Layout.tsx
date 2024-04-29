@@ -59,7 +59,7 @@ export const Layout = () => {
           )}
         </Group>
       </AppShell.Header>
-      <AppShell.Navbar p="md">
+      <AppShell.Navbar>
         <NavLink
           to={PATHS.ORGANIZATIONS}
           label="Организации"
