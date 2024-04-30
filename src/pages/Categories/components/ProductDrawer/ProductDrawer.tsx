@@ -1,15 +1,15 @@
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { ProductDrawerProps } from "./ProductDrawer.types";
-import { Drawer } from "@mantine/core";
+import { ActionIcon, Checkbox, Drawer, Tooltip } from "@mantine/core";
 import {
   MRT_ColumnDef,
   MantineReactTable,
   useMantineReactTable,
 } from "mantine-react-table";
-import { useDisclosure } from "@mantine/hooks";
 import { Product } from "../../../../types";
 import { Api } from "../../../../api";
 import { CreateProductModal } from "./parts";
+import { IconCircleXFilled } from "@tabler/icons-react";
 
 export const ProductDrawer: FC<ProductDrawerProps> = ({
   openedDrawer,
@@ -19,6 +19,16 @@ export const ProductDrawer: FC<ProductDrawerProps> = ({
   const [products, setProducts] = useState<Product[]>([]);
   const columns = useMemo<MRT_ColumnDef<Product>[]>(
     () => [
+      {
+        header: "",
+        accessorKey: "selling",
+        Cell: ({
+          row: {
+            original: { selling },
+          },
+        }) => <Checkbox checked={selling} />,
+        maxSize: 70,
+      },
       { header: "ID", accessorKey: "id" },
       { header: "Название", accessorKey: "name" },
     ],
@@ -33,17 +43,37 @@ export const ProductDrawer: FC<ProductDrawerProps> = ({
 
   useEffect(getProducts, []);
 
+  const deleteProduct = (id: string) => {
+    console.log(id);
+  };
+
   const table = useMantineReactTable({
     columns,
     data: products,
     renderTopToolbarCustomActions: () => (
       <CreateProductModal onCloseModal={getProducts} categoryId={categoryId} />
     ),
+    renderRowActions: ({
+      row: {
+        original: { id },
+      },
+    }) => (
+      <Tooltip label="Удалить товар">
+        <ActionIcon
+          variant="transparent"
+          color="red"
+          onClick={() => deleteProduct(id)}
+        >
+          <IconCircleXFilled />
+        </ActionIcon>
+      </Tooltip>
+    ),
+    enableEditing: true,
     initialState: { density: "xs" },
     enableDensityToggle: false,
     enableBottomToolbar: false,
     positionActionsColumn: "last",
-    localization: { actions: "Товары" },
+    localization: { actions: "Удалить" },
   });
 
   return (
@@ -52,7 +82,7 @@ export const ProductDrawer: FC<ProductDrawerProps> = ({
       onClose={closeDrawer}
       position="right"
       title="Список товаров"
-      size="lg"
+      size="xl"
     >
       <MantineReactTable table={table} />
     </Drawer>
