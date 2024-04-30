@@ -17,6 +17,12 @@ export class Api {
     });
   };
 
+  public static delete = (url: string) => {
+    return axios.delete(`${this.apiUrl}${url}`, {
+      headers: { Authorization: `Basic ${this.token}` },
+    });
+  };
+
   public static post = <Data = any, Response = any>(
     url: string,
     data: Data,

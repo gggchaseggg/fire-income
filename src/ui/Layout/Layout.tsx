@@ -67,7 +67,7 @@ export const Layout = () => {
           component={Link}
         />
         <NavLink
-          to={PATHS.STAFF}
+          to={PATHS.SUPERVISORS}
           label="Персонал"
           leftSection={<IconUsersGroup size="1rem" stroke={1.5} />}
           component={Link}

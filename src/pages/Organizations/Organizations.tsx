@@ -42,12 +42,15 @@ export const Organizations = () => {
     ),
     initialState: { density: "xs" },
     enableDensityToggle: false,
+    enableBottomToolbar: false,
   });
 
   return (
-    <div>
-      <Title order={2}>Организации</Title>
+    <>
+      <Title order={2} mb="md">
+        Организации
+      </Title>
       <MantineReactTable table={table} />
-    </div>
+    </>
   );
 };

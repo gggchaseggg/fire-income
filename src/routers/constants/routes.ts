@@ -2,7 +2,7 @@ export const enum PATHS {
   MAIN = "/",
   LOGIN = "/login",
   ORGANIZATIONS = "/orgs",
-  STAFF = "/staff",
+  SUPERVISORS = "/staff",
   CATEGORIES = "/categories",
   BRANCHES = "/branches",
 }

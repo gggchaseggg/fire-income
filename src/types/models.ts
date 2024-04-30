@@ -5,6 +5,12 @@ export enum Role {
   SELLER,
 }
 
+export enum MeasureUnit {
+  L,
+  KG,
+  UNIT,
+}
+
 export type Branch = {
   id: string;
   city: string;
@@ -25,15 +31,6 @@ export type Organization = {
   branches: Branch[];
 };
 
-export type CreateOrganization = {
-  name: string;
-  inn: string;
-  director: Pick<
-    User,
-    "surname" | "firstName" | "lastName" | "passport" | "password"
-  >;
-};
-
 export type User = {
   id: string;
   username: string;
@@ -46,3 +43,36 @@ export type User = {
   role: Role;
   organization: Organization;
 };
+
+export type Category = {
+  id: string;
+  name: string;
+  organization: Organization;
+};
+
+export type Product = {
+  id: string;
+  name: string;
+  category: Category;
+  measureUnit: MeasureUnit;
+  price: number;
+  selling: boolean;
+};
+
+export type CreateOrganization = {
+  name: string;
+  inn: string;
+  director: Pick<
+    User,
+    "surname" | "firstName" | "lastName" | "passport" | "password"
+  >;
+};
+
+export type CreateSupervisor = Pick<
+  User,
+  "surname" | "firstName" | "lastName" | "passport" | "password"
+>;
+
+export type CreateCategory = Pick<Category, "name">;
+
+export type CreateProduct = Pick<Product, "name" | "measureUnit" | "price">;

@@ -147,7 +147,7 @@ export const CreateOrganizationForm: FC<CreateOrganizationFormProps> = ({
         <Button variant="subtle" onClick={onCloseModal}>
           Отмена
         </Button>
-        <Button onClick={createOrganization}>Сохранить</Button>
+        <Button onClick={createOrganization}>Создать</Button>
       </Group>
     </>
   );

@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { PATHS } from "../constants";
 import { Layout } from "../../ui";
-import { Login, Organizations } from "../../pages";
+import { Categories, Login, Organizations, Supervisors } from "../../pages";
 import { useUser } from "../../contexts";
 
 export const Router = () => {
@@ -24,8 +24,8 @@ export const Router = () => {
         <Route path={PATHS.MAIN} element={<Layout />}>
           <Route index element={<div>Выберите вкладку</div>} />
           <Route path={PATHS.ORGANIZATIONS} element={<Organizations />} />
-          <Route path={PATHS.STAFF} element={<div>STAFF</div>} />
-          <Route path={PATHS.CATEGORIES} element={<div>CATEGORIES</div>} />
+          <Route path={PATHS.SUPERVISORS} element={<Supervisors />} />
+          <Route path={PATHS.CATEGORIES} element={<Categories />} />
           <Route path={PATHS.BRANCHES} element={<div>BRANCHES</div>} />
         </Route>
         <Route path="*" element={<Navigate to={PATHS.MAIN} />} />
