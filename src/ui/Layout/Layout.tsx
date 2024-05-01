@@ -18,6 +18,7 @@ import { Link, Outlet } from "react-router-dom";
 import { PATHS } from "../../routers";
 import { useDisclosure } from "@mantine/hooks";
 import { useUser, useUserSetter } from "../../contexts";
+import { Role } from "../../types";
 
 export const Layout = () => {
   const [opened, { toggle }] = useDisclosure();
@@ -60,31 +61,46 @@ export const Layout = () => {
         </Group>
       </AppShell.Header>
       <AppShell.Navbar>
-        <NavLink
-          to={PATHS.ORGANIZATIONS}
-          label="Организации"
-          leftSection={<IconBuildingSkyscraper size="1rem" stroke={1.5} />}
-          component={Link}
-        />
-        <NavLink
-          to={PATHS.SUPERVISORS}
-          label="Персонал"
-          leftSection={<IconUsersGroup size="1rem" stroke={1.5} />}
-          component={Link}
-        />
-        <NavLink
-          to={PATHS.CATEGORIES}
-          label="Категории"
-          leftSection={<IconList size="1rem" stroke={1.5} />}
-          component={Link}
-        />
+        {user && (
+          <>
+            {console.log(user)}
+            {user.role === Role.ADMIN && (
+              <NavLink
+                to={PATHS.ORGANIZATIONS}
+                label="Организации"
+                leftSection={
+                  <IconBuildingSkyscraper size="1rem" stroke={1.5} />
+                }
+                component={Link}
+              />
+            )}
+            {user.role === Role.CHIEF && (
+              <NavLink
+                to={PATHS.SUPERVISORS}
+                label="Персонал"
+                leftSection={<IconUsersGroup size="1rem" stroke={1.5} />}
+                component={Link}
+              />
+            )}
+            {[Role.CHIEF, Role.SUPERVISOR].includes(user.role) && (
+              <>
+                <NavLink
+                  to={PATHS.CATEGORIES}
+                  label="Категории"
+                  leftSection={<IconList size="1rem" stroke={1.5} />}
+                  component={Link}
+                />
 
-        <NavLink
-          to={PATHS.BRANCHES}
-          label="Филиалы"
-          leftSection={<IconAffiliate size="1rem" stroke={1.5} />}
-          component={Link}
-        />
+                <NavLink
+                  to={PATHS.BRANCHES}
+                  label="Филиалы"
+                  leftSection={<IconAffiliate size="1rem" stroke={1.5} />}
+                  component={Link}
+                />
+              </>
+            )}
+          </>
+        )}
       </AppShell.Navbar>
       <AppShell.Main>
         <Outlet />

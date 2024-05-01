@@ -1,8 +1,8 @@
 export enum Role {
-  ADMIN,
-  CHIEF,
-  SUPERVISOR,
-  SELLER,
+  ADMIN = "ADMIN",
+  CHIEF = "CHIEF",
+  SUPERVISOR = "SUPERVISOR",
+  SELLER = "SELLER",
 }
 
 export enum MeasureUnit {
@@ -70,9 +70,19 @@ export type CreateOrganization = {
 
 export type CreateSupervisor = Pick<
   User,
-  "surname" | "firstName" | "lastName" | "passport" | "password"
+  "firstName" | "surname" | "lastName" | "passport" | "password"
 >;
 
 export type CreateCategory = Pick<Category, "name">;
 
 export type CreateProduct = Pick<Product, "name" | "measureUnit" | "price">;
+
+export type CreateBranch = Pick<
+  Branch,
+  "city" | "street" | "house" | "kpp" | "adapterUrl" | "active"
+>;
+
+export type CreateSeller = Pick<
+  User,
+  "firstName" | "surname" | "lastName" | "passport"
+>;

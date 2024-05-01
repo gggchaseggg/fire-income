@@ -8,7 +8,7 @@ import {
 } from "mantine-react-table";
 import { Api } from "../../api";
 import { CreateSupervisorModal } from "./components";
-import { IconTrash } from "@tabler/icons-react";
+import { IconUnlink } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 
 export const Supervisors = () => {
@@ -70,7 +70,7 @@ export const Supervisors = () => {
           radius="xl"
           onClick={() => deleteSupervisorConfirmation(username)}
         >
-          <IconTrash />
+          <IconUnlink />
         </ActionIcon>
       </Tooltip>
     ),
@@ -79,7 +79,7 @@ export const Supervisors = () => {
     enableDensityToggle: false,
     enableBottomToolbar: false,
     positionActionsColumn: "last",
-    localization: { actions: "Уволить" },
+    localization: { actions: "" },
   });
 
   return (
