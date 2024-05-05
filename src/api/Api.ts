@@ -25,7 +25,7 @@ export class Api {
 
   public static post = <Data = any, Response = any>(
     url: string,
-    data: Data,
+    data?: Data,
   ) => {
     return axios.post<Data, AxiosResponse<Response>>(
       `${this.apiUrl}${url}`,

@@ -6,7 +6,7 @@ import {
   MantineReactTable,
   useMantineReactTable,
 } from "mantine-react-table";
-import { Branch, Role, User } from "../../../../types";
+import { User } from "../../../../types";
 import { Api } from "../../../../api";
 import { CreateSellerModal } from "./parts";
 import { IconUnlink } from "@tabler/icons-react";
@@ -16,21 +16,7 @@ export const SellersDrawer: FC<SellersDrawerProps> = ({
   closeDrawer,
   branch: { city, street, house, kpp },
 }) => {
-  const [sellers, setSellers] = useState<User[]>([
-    {
-      id: "string",
-      username: "string",
-      surname: "string",
-      firstName: "string",
-      lastName: "string",
-      password: "string",
-      passport: "string",
-      active: true,
-      role: Role.SELLER,
-      // @ts-ignore
-      organization: {},
-    },
-  ]);
+  const [sellers, setSellers] = useState<User[]>([]);
   const columns = useMemo<MRT_ColumnDef<User>[]>(
     () => [
       { header: "ID", accessorKey: "id" },
@@ -43,34 +29,42 @@ export const SellersDrawer: FC<SellersDrawerProps> = ({
     [],
   );
 
-  const getProducts = useCallback(() => {
-    Api.get<Branch>(`/branch/${kpp}`).then(({ data: { sellers } }) => {
-      setSellers(sellers);
+  const getSellers = useCallback(() => {
+    Api.get<User[]>(`/branch/${kpp}/sellers`).then(({ data }) => {
+      setSellers(data);
     });
   }, []);
 
-  useEffect(getProducts, []);
+  useEffect(() => {
+    if (openedDrawer) {
+      getSellers();
+    }
+  }, [openedDrawer]);
 
-  const deleteProduct = (id: string) => {
-    console.log(id);
+  const detachSeller = (username: string) => {
+    Api.post(`/branch/${kpp}/sellers/${username}/detach`).then(getSellers);
   };
 
   const table = useMantineReactTable({
     columns,
     data: sellers,
     renderTopToolbarCustomActions: () => (
-      <CreateSellerModal onCloseModal={getProducts} kpp={kpp} />
+      <CreateSellerModal
+        onCloseModal={getSellers}
+        kpp={kpp}
+        sellers={sellers}
+      />
     ),
     renderRowActions: ({
       row: {
-        original: { id },
+        original: { username },
       },
     }) => (
       <Tooltip label="Открепить продавца">
         <ActionIcon
           variant="transparent"
           color="red"
-          onClick={() => deleteProduct(id)}
+          onClick={() => detachSeller(username)}
         >
           <IconUnlink />
         </ActionIcon>

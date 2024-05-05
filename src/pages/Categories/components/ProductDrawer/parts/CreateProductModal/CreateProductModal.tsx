@@ -14,15 +14,9 @@ export const CreateProductModal: FC<CreateProductModalProps> = ({
   const [title, setTitle] = useState("");
 
   const createCategory = (data: CreateProduct) => {
-    Api.post<CreateProduct, Product>(
-      `/category/${categoryId}/product`,
-      data,
-    ).then(({ data: { name } }) => setTitle(name));
-    closeModal();
-  };
-
-  const closeModal = () => {
-    onCloseModal();
+    Api.post<CreateProduct, Product>(`/category/${categoryId}/product`, data)
+      .then(({ data: { name } }) => setTitle(name))
+      .then(onCloseModal);
     close();
   };
 
@@ -33,14 +27,11 @@ export const CreateProductModal: FC<CreateProductModalProps> = ({
       </Button>
       <Modal
         opened={opened}
-        onClose={closeModal}
+        onClose={close}
         title="Добавление продукта"
         size="lg"
       >
-        <CreateProductForm
-          onCreate={createCategory}
-          onCloseModal={closeModal}
-        />
+        <CreateProductForm onCreate={createCategory} onCloseModal={close} />
       </Modal>
       {title && (
         <Alert

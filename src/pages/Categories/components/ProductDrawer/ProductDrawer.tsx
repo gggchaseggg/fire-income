@@ -34,14 +34,18 @@ export const ProductDrawer: FC<ProductDrawerProps> = ({
     ],
     [],
   );
-
+  console.log(categoryId);
   const getProducts = useCallback(() => {
     Api.get<Product[]>(`/category/${categoryId}/product`).then(({ data }) => {
       setProducts(data);
     });
   }, []);
 
-  useEffect(getProducts, []);
+  useEffect(() => {
+    if (openedDrawer) {
+      getProducts();
+    }
+  }, [openedDrawer]);
 
   const deleteProduct = (id: string) => {
     console.log(id);

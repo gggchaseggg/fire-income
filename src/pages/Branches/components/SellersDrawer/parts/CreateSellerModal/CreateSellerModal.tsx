@@ -4,24 +4,22 @@ import { FC, useState } from "react";
 import { Api } from "../../../../../../api";
 import { CreateSeller } from "../../../../../../types";
 import { CreateSellerModalProps } from "./CreateSellerModal.types";
-import { CreateSellerForm } from "./parts";
+import { CreateSellerForm, CreateExistingSellerForm } from "./parts";
 
 export const CreateSellerModal: FC<CreateSellerModalProps> = ({
   onCloseModal,
   kpp,
+  sellers,
 }) => {
   const [opened, { open, close }] = useDisclosure(false);
+  const [openedExisting, { open: openExisting, close: closeExisting }] =
+    useDisclosure(false);
   const [title, setTitle] = useState("");
 
-  const createCategory = (data: CreateSeller) => {
-    Api.post<CreateSeller, string>(`/branch/${kpp}/sellers/attach`, data).then(
-      ({ data }) => setTitle(data),
-    );
-    closeModal();
-  };
-
-  const closeModal = () => {
-    onCloseModal();
+  const createSeller = (data: CreateSeller) => {
+    Api.post<CreateSeller, string>(`/branch/${kpp}/sellers/attach`, data)
+      .then(({ data }) => setTitle(data))
+      .then(onCloseModal);
     close();
   };
 
@@ -30,13 +28,30 @@ export const CreateSellerModal: FC<CreateSellerModalProps> = ({
       <Button variant="light" onClick={open}>
         Добавить продавца
       </Button>
+      <Button variant="light" onClick={openExisting}>
+        Добавить существующего продавца
+      </Button>
+
+      <Modal
+        opened={openedExisting}
+        onClose={closeExisting}
+        title="Добавление существующего продавца"
+        size="lg"
+      >
+        <CreateExistingSellerForm
+          onCreate={createSeller}
+          onCloseModal={close}
+          sellers={sellers}
+        />
+      </Modal>
+
       <Modal
         opened={opened}
-        onClose={closeModal}
+        onClose={close}
         title="Добавление продавца"
         size="lg"
       >
-        <CreateSellerForm onCreate={createCategory} onCloseModal={closeModal} />
+        <CreateSellerForm onCreate={createSeller} onCloseModal={close} />
       </Modal>
       {title && (
         <Alert

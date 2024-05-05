@@ -12,18 +12,7 @@ import { IconUsersGroup, IconTrash } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 
 export const Branches = () => {
-  const [branches, setBranches] = useState<Branch[]>([
-    {
-      id: "string",
-      city: "string",
-      street: "string",
-      house: "string",
-      kpp: "string",
-      sellers: [],
-      adapterUrl: "string",
-      active: true,
-    },
-  ]);
+  const [branches, setBranches] = useState<Branch[]>([]);
   const [branch, setBranch] = useState<Nullable<Branch>>(null);
   const [opened, { open, close }] = useDisclosure(false);
   const columns = useMemo<MRT_ColumnDef<Branch>[]>(
