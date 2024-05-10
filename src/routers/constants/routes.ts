@@ -5,4 +5,5 @@ export const enum PATHS {
   SUPERVISORS = "/staff",
   CATEGORIES = "/categories",
   BRANCHES = "/branches",
+  METRICS = "/metrics",
 }

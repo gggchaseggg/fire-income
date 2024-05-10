@@ -7,6 +7,7 @@ import {
   Login,
   Organizations,
   Supervisors,
+  Metrics,
 } from "../../pages";
 import { useUser } from "../../contexts";
 import { Role } from "../../types";
@@ -43,6 +44,7 @@ export const Router = () => {
                 <Route path={PATHS.BRANCHES} element={<Branches />} />
               </>
             )}
+            <Route path={PATHS.METRICS} element={<Metrics />} />
           </Route>
         )}
         {!user && <Route path={PATHS.LOGIN} element={<Login />} />}

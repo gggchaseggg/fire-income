@@ -13,6 +13,7 @@ import {
   IconList,
   IconAffiliate,
   IconLogout,
+  IconChartBar,
 } from "@tabler/icons-react";
 import { Link, Outlet } from "react-router-dom";
 import { PATHS } from "../../routers";
@@ -63,7 +64,6 @@ export const Layout = () => {
       <AppShell.Navbar>
         {user && (
           <>
-            {console.log(user)}
             {user.role === Role.ADMIN && (
               <NavLink
                 to={PATHS.ORGANIZATIONS}
@@ -99,6 +99,12 @@ export const Layout = () => {
                 />
               </>
             )}
+            <NavLink
+              to={PATHS.METRICS}
+              label="Статистика продаж"
+              leftSection={<IconChartBar size="1rem" stroke={1.5} />}
+              component={Link}
+            />
           </>
         )}
       </AppShell.Navbar>
