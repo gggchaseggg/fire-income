@@ -14,6 +14,7 @@ import {
   IconAffiliate,
   IconLogout,
   IconChartBar,
+  IconUpload,
 } from "@tabler/icons-react";
 import { Link, Outlet } from "react-router-dom";
 import { PATHS } from "../../routers";
@@ -98,9 +99,15 @@ export const Layout = () => {
                   component={Link}
                 />
                 <NavLink
-                  to={PATHS.METRICS}
+                  to={PATHS.SALE_STATISTICS}
                   label="Статистика продаж"
                   leftSection={<IconChartBar size="1rem" stroke={1.5} />}
+                  component={Link}
+                />
+                <NavLink
+                  to={PATHS.UPLOADED_SALES}
+                  label="Загруженные продажи"
+                  leftSection={<IconUpload size="1rem" stroke={1.5} />}
                   component={Link}
                 />
               </>

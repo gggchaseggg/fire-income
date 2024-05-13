@@ -5,5 +5,6 @@ export const enum PATHS {
   SUPERVISORS = "/staff",
   CATEGORIES = "/categories",
   BRANCHES = "/branches",
-  METRICS = "/metrics",
+  SALE_STATISTICS = "/saleStatistics",
+  UPLOADED_SALES = "/uploadedSales",
 }

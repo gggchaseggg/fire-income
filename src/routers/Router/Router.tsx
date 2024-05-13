@@ -8,6 +8,7 @@ import {
   Organizations,
   Supervisors,
   Metrics,
+  UploadedSales,
 } from "../../pages";
 import { useUser } from "../../contexts";
 import { Role } from "../../types";
@@ -48,7 +49,11 @@ export const Router = () => {
                 <Route index element={<Navigate to={PATHS.CATEGORIES} />} />
                 <Route path={PATHS.CATEGORIES} element={<Categories />} />
                 <Route path={PATHS.BRANCHES} element={<Branches />} />
-                <Route path={PATHS.METRICS} element={<Metrics />} />
+                <Route path={PATHS.SALE_STATISTICS} element={<Metrics />} />
+                <Route
+                  path={PATHS.UPLOADED_SALES}
+                  element={<UploadedSales />}
+                />
               </>
             )}
           </Route>

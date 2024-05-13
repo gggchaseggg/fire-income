@@ -86,3 +86,42 @@ export type CreateSeller = Pick<
   User,
   "firstName" | "surname" | "lastName" | "passport"
 >;
+
+export enum SaleProcessingStatus {
+  IN_PROCESS = "IN_PROCESS",
+  SAVED = "SAVED",
+  ERROR = "ERROR",
+}
+
+export type UploadSale = {
+  id: string;
+  productName: string;
+  sellerFio: string;
+  amount: string;
+  cost: string;
+  time: string;
+  status: SaleProcessingStatus;
+  branch: Branch;
+  error?: string;
+};
+
+export type UploadSalesResponse = {
+  content: UploadSale[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: never[];
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  last: boolean;
+  totalElements: number;
+  totalPages: number;
+  first: boolean;
+  size: number;
+  number: number;
+  sort: never[];
+  numberOfElements: number;
+  empty: boolean;
+};
