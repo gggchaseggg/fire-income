@@ -2,22 +2,21 @@ import { Alert, Button, Modal, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { FC, useState } from "react";
 import { Api } from "../../../../../../api";
-import { CreateSeller } from "../../../../../../types";
+import { CreateSeller, User } from "../../../../../../types";
 import { CreateSellerModalProps } from "./CreateSellerModal.types";
 import { CreateSellerForm, CreateExistingSellerForm } from "./parts";
 
 export const CreateSellerModal: FC<CreateSellerModalProps> = ({
   onCloseModal,
   kpp,
-  sellers,
 }) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [openedExisting, { open: openExisting, close: closeExisting }] =
     useDisclosure(false);
   const [title, setTitle] = useState("");
 
-  const createSeller = (data: CreateSeller) => {
-    Api.post<CreateSeller, string>(`/branch/${kpp}/sellers/attach`, data)
+  const createSeller = (data: CreateSeller | User) => {
+    Api.post<CreateSeller | User, string>(`/branch/${kpp}/sellers/attach`, data)
       .then(({ data }) => setTitle(data))
       .then(onCloseModal);
     close();
@@ -40,8 +39,7 @@ export const CreateSellerModal: FC<CreateSellerModalProps> = ({
       >
         <CreateExistingSellerForm
           onCreate={createSeller}
-          onCloseModal={close}
-          sellers={sellers}
+          onCloseModal={closeExisting}
         />
       </Modal>
 

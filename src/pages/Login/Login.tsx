@@ -34,7 +34,6 @@ export const Login = () => {
     Api.setTokenAndUser(login, password)
       .then(({ data }) => {
         userSetter(data);
-        console.log(data);
         navigate(PATHS.MAIN);
       })
       .catch(() => setError(true))

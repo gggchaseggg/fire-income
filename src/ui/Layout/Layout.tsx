@@ -45,7 +45,7 @@ export const Layout = () => {
           {user ? (
             <Menu shadow="md" width={200}>
               <Menu.Target>
-                <Button>{user.firstName}</Button>
+                <Button>{user.username}</Button>
               </Menu.Target>
 
               <Menu.Dropdown>
@@ -97,14 +97,14 @@ export const Layout = () => {
                   leftSection={<IconAffiliate size="1rem" stroke={1.5} />}
                   component={Link}
                 />
+                <NavLink
+                  to={PATHS.METRICS}
+                  label="Статистика продаж"
+                  leftSection={<IconChartBar size="1rem" stroke={1.5} />}
+                  component={Link}
+                />
               </>
             )}
-            <NavLink
-              to={PATHS.METRICS}
-              label="Статистика продаж"
-              leftSection={<IconChartBar size="1rem" stroke={1.5} />}
-              component={Link}
-            />
           </>
         )}
       </AppShell.Navbar>

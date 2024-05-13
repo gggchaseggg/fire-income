@@ -1,7 +1,6 @@
-import { CreateSeller, User } from "../../../../../../../../types";
+import { User } from "../../../../../../../../types";
 
 export type CreateExistingSellerFormProps = {
-  onCreate: (data: CreateSeller) => void;
+  onCreate: (data: User) => void;
   onCloseModal: () => void;
-  sellers: User[];
 };

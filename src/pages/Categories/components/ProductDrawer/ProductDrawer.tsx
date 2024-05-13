@@ -1,6 +1,14 @@
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { ProductDrawerProps } from "./ProductDrawer.types";
-import { ActionIcon, Checkbox, Drawer, Tooltip } from "@mantine/core";
+import {
+  ActionIcon,
+  Badge,
+  Checkbox,
+  ColorSwatch,
+  Drawer,
+  Flex,
+  Tooltip,
+} from "@mantine/core";
 import {
   MRT_ColumnDef,
   MantineReactTable,
@@ -9,7 +17,7 @@ import {
 import { Product } from "../../../../types";
 import { Api } from "../../../../api";
 import { CreateProductModal } from "./parts";
-import { IconCircleXFilled } from "@tabler/icons-react";
+import { IconSwitch3 } from "@tabler/icons-react";
 
 export const ProductDrawer: FC<ProductDrawerProps> = ({
   openedDrawer,
@@ -20,13 +28,19 @@ export const ProductDrawer: FC<ProductDrawerProps> = ({
   const columns = useMemo<MRT_ColumnDef<Product>[]>(
     () => [
       {
-        header: "",
+        header: "Статус",
         accessorKey: "selling",
         Cell: ({
           row: {
             original: { selling },
           },
-        }) => <Checkbox checked={selling} />,
+        }) => (
+          <Flex justify={"center"}>
+            <Tooltip label={selling ? "Продается" : "Не продается"}>
+              <ColorSwatch color={selling ? "green" : "yellow"} size={"12px"} />
+            </Tooltip>
+          </Flex>
+        ),
         maxSize: 70,
       },
       { header: "ID", accessorKey: "id" },
@@ -34,21 +48,25 @@ export const ProductDrawer: FC<ProductDrawerProps> = ({
     ],
     [],
   );
-  console.log(categoryId);
+
   const getProducts = useCallback(() => {
-    Api.get<Product[]>(`/category/${categoryId}/product`).then(({ data }) => {
-      setProducts(data);
-    });
-  }, []);
+    if (categoryId) {
+      Api.get<Product[]>(`/category/${categoryId}/product`).then(({ data }) => {
+        setProducts(data);
+      });
+    }
+  }, [categoryId]);
 
   useEffect(() => {
     if (openedDrawer) {
       getProducts();
     }
-  }, [openedDrawer]);
+  }, [openedDrawer, categoryId]);
 
-  const deleteProduct = (id: string) => {
-    console.log(id);
+  const changeStatus = (productId: string) => {
+    Api.post(`/category/product/${productId}/changeStatus`).then(() => {
+      getProducts();
+    });
   };
 
   const table = useMantineReactTable({
@@ -62,13 +80,9 @@ export const ProductDrawer: FC<ProductDrawerProps> = ({
         original: { id },
       },
     }) => (
-      <Tooltip label="Удалить товар">
-        <ActionIcon
-          variant="transparent"
-          color="red"
-          onClick={() => deleteProduct(id)}
-        >
-          <IconCircleXFilled />
+      <Tooltip label="Сменить статус">
+        <ActionIcon variant="transparent" onClick={() => changeStatus(id)}>
+          <IconSwitch3 />
         </ActionIcon>
       </Tooltip>
     ),
@@ -77,7 +91,7 @@ export const ProductDrawer: FC<ProductDrawerProps> = ({
     enableDensityToggle: false,
     enableBottomToolbar: false,
     positionActionsColumn: "last",
-    localization: { actions: "Удалить" },
+    localization: { actions: "" },
   });
 
   return (

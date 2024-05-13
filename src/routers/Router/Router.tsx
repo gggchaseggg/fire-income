@@ -31,20 +31,26 @@ export const Router = () => {
       <Routes>
         {user && (
           <Route path={PATHS.MAIN} element={<Layout />}>
-            <Route index element={<div>Выберите вкладку</div>} />
             {user.role === Role.ADMIN && (
-              <Route path={PATHS.ORGANIZATIONS} element={<Organizations />} />
+              <>
+                <Route index element={<Navigate to={PATHS.ORGANIZATIONS} />} />
+                <Route path={PATHS.ORGANIZATIONS} element={<Organizations />} />
+              </>
             )}
             {user.role === Role.CHIEF && (
-              <Route path={PATHS.SUPERVISORS} element={<Supervisors />} />
+              <>
+                <Route index element={<Navigate to={PATHS.SUPERVISORS} />} />
+                <Route path={PATHS.SUPERVISORS} element={<Supervisors />} />
+              </>
             )}
             {[Role.CHIEF, Role.SUPERVISOR].includes(user.role) && (
               <>
+                <Route index element={<Navigate to={PATHS.CATEGORIES} />} />
                 <Route path={PATHS.CATEGORIES} element={<Categories />} />
                 <Route path={PATHS.BRANCHES} element={<Branches />} />
+                <Route path={PATHS.METRICS} element={<Metrics />} />
               </>
             )}
-            <Route path={PATHS.METRICS} element={<Metrics />} />
           </Route>
         )}
         {!user && <Route path={PATHS.LOGIN} element={<Login />} />}

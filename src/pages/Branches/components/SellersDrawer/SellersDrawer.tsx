@@ -49,11 +49,7 @@ export const SellersDrawer: FC<SellersDrawerProps> = ({
     columns,
     data: sellers,
     renderTopToolbarCustomActions: () => (
-      <CreateSellerModal
-        onCloseModal={getSellers}
-        kpp={kpp}
-        sellers={sellers}
-      />
+      <CreateSellerModal onCloseModal={getSellers} kpp={kpp} />
     ),
     renderRowActions: ({
       row: {
