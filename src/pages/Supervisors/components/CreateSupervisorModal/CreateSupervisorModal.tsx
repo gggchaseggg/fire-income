@@ -13,9 +13,9 @@ export const CreateSupervisorModal: FC<CreateSupervisorModalProps> = ({
   const [username, setUsername] = useState("");
 
   const createSupervisor = (data: CreateSupervisor) => {
-    Api.post<CreateSupervisor, string>("/chief/supervisors/create", data).then(
-      ({ data }) => setUsername(data),
-    );
+    Api.post<CreateSupervisor, string>("/chief/supervisors/create", data)
+      .then(({ data }) => setUsername(data))
+      .then(onCloseModal);
     closeModal();
   };
 

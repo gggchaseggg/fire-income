@@ -24,6 +24,7 @@ export const Branches = () => {
         accessorFn: ({ city, street, house }) =>
           `г. ${city} ул. ${street} д. ${house}`,
       },
+      { header: "Адрес адаптера", accessorKey: "adapterUrl" },
     ],
     [],
   );

@@ -23,8 +23,9 @@ export const SellersDrawer: FC<SellersDrawerProps> = ({
       {
         header: "Имя",
         accessorFn: ({ firstName, surname, lastName }) =>
-          `${firstName} ${surname} ${lastName}`,
+          `${surname} ${firstName} ${lastName}`,
       },
+      { header: "Логин", accessorKey: "username" },
     ],
     [],
   );
@@ -33,13 +34,16 @@ export const SellersDrawer: FC<SellersDrawerProps> = ({
     Api.get<User[]>(`/branch/${kpp}/sellers`).then(({ data }) => {
       setSellers(data);
     });
-  }, []);
+  }, [kpp]);
 
   useEffect(() => {
     if (openedDrawer) {
       getSellers();
     }
-  }, [openedDrawer]);
+    return () => {
+      setSellers([]);
+    };
+  }, [openedDrawer, kpp]);
 
   const detachSeller = (username: string) => {
     Api.post(`/branch/${kpp}/sellers/${username}/detach`).then(getSellers);

@@ -13,9 +13,9 @@ export const CreateCategoriesModal: FC<CreateCategoriesModalProps> = ({
   const [title, setTitle] = useState("");
 
   const createCategory = (data: CreateCategory) => {
-    Api.post<CreateCategory, Category>("/category/create", data).then(
-      ({ data: { name } }) => setTitle(name),
-    );
+    Api.post<CreateCategory, Category>("/category/create", data)
+      .then(({ data: { name } }) => setTitle(name))
+      .then(onCloseModal);
     closeModal();
   };
 

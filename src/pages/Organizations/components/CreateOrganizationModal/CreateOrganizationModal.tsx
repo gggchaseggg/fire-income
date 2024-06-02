@@ -13,9 +13,9 @@ export const CreateOrganizationModal: FC<CreateOrganizationModalProps> = ({
   const [username, setUsername] = useState("");
 
   const createOrganization = (data: CreateOrganization) => {
-    Api.post<CreateOrganization, string>("/admin/createOrg", data).then(
-      ({ data }) => setUsername(data),
-    );
+    Api.post<CreateOrganization, string>("/admin/createOrg", data)
+      .then(({ data }) => setUsername(data))
+      .then(onCloseModal);
     closeModal();
   };
 

@@ -13,7 +13,7 @@ export const CreateExistingSellerForm: FC<CreateExistingSellerFormProps> = ({
 
   const sellersFormat = sellers.map(
     ({ username, firstName, surname, lastName, passport }) =>
-      `${username}: ${firstName} ${surname} ${lastName} ${passport}`,
+      `${username}: ${surname} ${firstName} ${lastName} ${passport}`,
   );
 
   const getSellers = useCallback(() => {

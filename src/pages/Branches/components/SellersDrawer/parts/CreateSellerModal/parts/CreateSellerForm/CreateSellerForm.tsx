@@ -25,20 +25,21 @@ export const CreateSellerForm: FC<CreateSellerFormProps> = ({
       <Grid>
         <Grid.Col span={4}>
           <TextInput
-            label="Имя"
-            placeholder="Укажите имя"
-            value={firstName}
-            onChange={({ target: { value } }) => setFirstname(value)}
-          />
-        </Grid.Col>
-        <Grid.Col span={4}>
-          <TextInput
             label="Фамилия"
             placeholder="Укажите фамилию"
             value={surname}
             onChange={({ target: { value } }) => setSurname(value)}
           />
         </Grid.Col>
+        <Grid.Col span={4}>
+          <TextInput
+            label="Имя"
+            placeholder="Укажите имя"
+            value={firstName}
+            onChange={({ target: { value } }) => setFirstname(value)}
+          />
+        </Grid.Col>
+
         <Grid.Col span={4}>
           <TextInput
             label="Отчество"

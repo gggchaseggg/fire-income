@@ -2,12 +2,7 @@ import { Alert, Button, Text, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { FC, useState } from "react";
 import { Api } from "../../../../api";
-import {
-  Branch,
-  Category,
-  CreateBranch,
-  CreateCategory,
-} from "../../../../types";
+import { Branch, CreateBranch } from "../../../../types";
 import { CreateBranchModalProps } from "./CreateBranchModal.types";
 import { CreateBranchForm } from "./parts";
 
@@ -18,9 +13,9 @@ export const CreateBranchModal: FC<CreateBranchModalProps> = ({
   const [kpp, setKpp] = useState("");
 
   const createCategory = (data: CreateBranch) => {
-    Api.post<CreateBranch, Branch>("/chief/branches/create", data).then(
-      ({ data: { kpp } }) => setKpp(kpp),
-    );
+    Api.post<CreateBranch, Branch>("/chief/branches/create", data)
+      .then(({ data: { kpp } }) => setKpp(kpp))
+      .then(onCloseModal);
     closeModal();
   };
 
